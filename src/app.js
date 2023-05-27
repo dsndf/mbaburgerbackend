@@ -43,7 +43,7 @@ app.use(session({
 
 app.use(passport.authenticate('session'));
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session()); 
 app.enable("trust proxy");
 app.use(userRouter);
 app.use(orderRouter);
@@ -51,6 +51,7 @@ app.use(customErrorHanlder);
 app.use(paymentRouter);
 const server = app.listen(port, () => {
     console.log("listening at port " + port + " mode is " + process.env.NODE_ENV);
+    console.log("\n"+process.env.MONGODB_URI);
 });
 
 

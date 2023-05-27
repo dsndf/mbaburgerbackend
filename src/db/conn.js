@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 console.log(process.env.SESSION_SECERET);
 const connectdb = () => {
-    mongoose.connect("mongodb://127.0.0.1:27017/OnlineFood", {
+    mongoose.connect(process.env.MONGODB_URI, {
         useNewUrlParser: true, useUnifiedTopology: true
     }).then(() => {
         console.log("Database connected");
