@@ -1,18 +1,18 @@
 import passport from 'passport';
-import { Strategy as GoogleStradegy } from 'passport-google-oauth20';
+import {Strategy as GoogleStradegy, Strategy } from 'passport-google-oauth20';
 import userCollection from '../models/User.js';
 import dotenv from 'dotenv';
 // dotenv.config();
 
 const applyGoogleAuth = () => {
 
-    passport.use(new GoogleStradegy({
+    passport.use(new Strategy({
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
         callbackURL: process.env.CALLBACK_URL ,
         passReqToCallback: true
 
-    }, async (request, accessToken, refreshToken, profile, done) => {
+    }, async (request, accessToken, refreshToken, profile, cb) => {
         const user = await userCollection.findOne({ googleId: profile.id });
         if (!user) {
             const newUser = await userCollection.create({
@@ -21,10 +21,10 @@ const applyGoogleAuth = () => {
                 photo: profile.photos[0].value,
                 email:profile.emails[0].value
             });
-            return done(null, newUser);
+            return cb(null, newUser);
         }
         else {
-            return done(null, user);
+            return cb(null, user);
         }
     }))
     passport.serializeUser((user, done) => {

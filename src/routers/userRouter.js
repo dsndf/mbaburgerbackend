@@ -1,6 +1,6 @@
 import express from 'express';
 import passport from 'passport';
-import { deleteUser, getAllUsers, getCounts, getSingleUser, loginSuccess, myProfile, updateUserRole } from '../controllers/userController.js';
+import { deleteUser, getAllUsers, getCounts, getSingleUser, myProfile, updateUserRole } from '../controllers/userController.js';
 import asyncError from '../utils/asyncError.js';
 import userAuth from '../middleware/userAuth.js';
 import authorization from '../middleware/authorization.js';
@@ -14,34 +14,30 @@ userRouter.route('/').get((req, res) => {
 
 userRouter.route('/google/login').get(passport.authenticate("google", {
     scope: ["profile", "email"],
-    successRedirect: '/success',
-    successMessage: "Happy login",
-    failureRedirect: "/fail",
 }));
 
 userRouter.route('/login').get(passport.authenticate("google", {
-    failureRedirect: '/fail',
+    failureRedirect: process.env.FAILIURE_REDIRECT,
     successRedirect: process.env.FRONTEND_URL
 }));
-userRouter.route('/fail').get((req, res) => {
-    res.send("failed to login");
-});
+// userRouter.route('/fail').get((req, res) => { // this route is to check failure of login at server side rendering 
+//     res.send("failed to login");
+// });
 
 userRouter.get('/logout', (req, res) => {
     req.session.destroy((err) => {
-    console.log(err);
-            req.logout((err)=>{
+        console.log(err);
+        req.logout((err) => {
             
-                    console.log("logout successfully")
-                
-            });
-            res.clearCookie('connect.sid');
-           res.send({success:true});
+            console.log("logout successfully")
+        });
+        res.clearCookie('connect.sid');
+        res.send({ success: true });
 
     })
 })
 
-userRouter.route('/success').get(loginSuccess);
+
 userRouter.route('/me').get(userAuth, myProfile);
 userRouter.get("/admin/users", userAuth, authorization("admin"), asyncError(getAllUsers));
 userRouter.get("/admin/user/:id", userAuth, authorization("admin"), asyncError(getSingleUser));

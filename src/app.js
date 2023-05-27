@@ -1,6 +1,6 @@
 import express, { urlencoded } from 'express';
 import dotenv from 'dotenv';
-import session from 'express-session';
+import  session from 'express-session';
 import applyGoogleAuth from './utils/Provider.js';
 import connectdb from './db/conn.js';
 import passport from 'passport';
@@ -26,6 +26,10 @@ app.use(cors({
     origin: process.env.FRONTEND_URL,
     method: ['GET', 'POST', 'PUT', 'DELETE']
 }))
+app.use(urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.json());
+applyGoogleAuth();
 
 app.use(session({
     secret: process.env.SESSION_SECERET,
@@ -36,16 +40,6 @@ app.use(session({
         sameSite: process.env.NODE_ENV === "development" ? false : true
     }
 }));
-applyGoogleAuth();
-
-
-
-
-app.use(urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.json());
-
-
 
 app.use(passport.authenticate('session'));
 app.use(passport.initialize());

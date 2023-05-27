@@ -2,9 +2,6 @@ import orderCollection from "../models/Orders.js";
 import userCollection from "../models/User.js";
 import errorHandler from "../utils/ErrorHandler.js";
 
-export const loginSuccess = (req, res) => {
-    res.json({ success: true });
-}
 
 export const myProfile = (req, res, next) => {
     res.json({ success: true, user: req.user });
