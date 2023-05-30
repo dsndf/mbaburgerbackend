@@ -1,12 +1,12 @@
 import passport from 'passport';
-import {Strategy as GoogleStradegy, Strategy } from 'passport-google-oauth20';
+import {Strategy as GoogleStradegy } from 'passport-google-oauth20';
 import userCollection from '../models/User.js';
 import dotenv from 'dotenv';
 // dotenv.config();
 
 const applyGoogleAuth = () => {
 
-    passport.use(new Strategy({
+    passport.use(new GoogleStradegy({
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
         callbackURL: process.env.CALLBACK_URL ,

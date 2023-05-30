@@ -4,8 +4,9 @@ import { deleteUser, getAllUsers, getCounts, getSingleUser, myProfile, updateUse
 import asyncError from '../utils/asyncError.js';
 import userAuth from '../middleware/userAuth.js';
 import authorization from '../middleware/authorization.js';
-import dotenv from 'dotenv';
-dotenv.config();
+import sendContactInfo from '../controllers/contact.js';
+// import dotenv from 'dotenv';
+// dotenv.config();
 const userRouter = express.Router();
 
 userRouter.route('/').get((req, res) => {
@@ -31,7 +32,11 @@ userRouter.get('/logout', (req, res) => {
             
             console.log("logout successfully")
         });
-        res.clearCookie('connect.sid');
+        res.clearCookie('connect.sid',{
+            secure: process.env.NODE_ENV === "development" ? false : true,
+            sameSite: process.env.NODE_ENV === "development" ? false : "none",
+            httpOnly: process.env.NODE_ENV === "development" ? false : true
+        });
         res.send({ success: true });
 
     })
@@ -44,4 +49,5 @@ userRouter.get("/admin/user/:id", userAuth, authorization("admin"), asyncError(g
 userRouter.put("/admin/user/update/:id", userAuth, authorization("admin"), asyncError(updateUserRole));
 userRouter.delete("/admin/user/:id", userAuth, authorization("admin"), asyncError(deleteUser));
 userRouter.get('/admin/stats', userAuth, authorization("admin"), getCounts);
+userRouter.post('/contact',asyncError(sendContactInfo));
 export default userRouter;

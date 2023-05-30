@@ -33,7 +33,8 @@ if(paymentMethod === 'Online'){
         itemsPrice,
         taxPrice,
         totalPrice,
-        paidAt
+        paidAt,
+        shippingPrice
     });
     res.json({
         success: true,

@@ -37,7 +37,8 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         secure: process.env.NODE_ENV === "development" ? false : true,
-        sameSite: process.env.NODE_ENV === "development" ? false : "none"
+        sameSite: process.env.NODE_ENV === "development" ? false : "none",
+        httpOnly: process.env.NODE_ENV === "development" ? false : true
     } 
 }));
 
@@ -57,7 +58,6 @@ const server = app.listen(port, () => {
 
 process.on("unhandledRejection", (err) => {
     console.log("" + err.message);
-    console.log("server closed");
     server.close(() => {
         console.log("server is closed");
     })
