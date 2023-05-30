@@ -33,7 +33,7 @@ applyGoogleAuth();
 
 app.use(session({
     secret: process.env.SESSION_SECERET,
-    resave: false,
+    resave: true,
     saveUninitialized: false,
     cookie: {
         secure: process.env.NODE_ENV === "development" ? false : true,
