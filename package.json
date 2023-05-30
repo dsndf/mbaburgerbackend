@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
     ,
-    "start": "SET NODE_ENV=production & node ./src/app.js",
-    "dev":"node ./src/app.js"
+      "start": "set NODE_ENV=production && node ./src/app.js",
+    "dev":"set NODE_ENV=development && node ./src/app.js"
   },
   "type": "module",
   "author": "gaurav jain",
