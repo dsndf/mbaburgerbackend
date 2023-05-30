@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 
 const applyGoogleAuth = () => {
 console.log(process.env.CALLBACK_URL)
-    passport.use(new Strategy({
+    passport.use(new GoogleStradegy({
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
         callbackURL: process.env.CALLBACK_URL ,
