@@ -26,7 +26,7 @@ app.use(cors({
     origin: process.env.FRONTEND_URL,
     method: ['GET', 'POST', 'PUT', 'DELETE']
 }))
-app.use(urlencoded({ extended: false }));
+app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.json());
 applyGoogleAuth();
@@ -48,8 +48,8 @@ app.use(passport.session());
 app.enable("trust proxy");
 app.use(userRouter);
 app.use(orderRouter);
-app.use(customErrorHanlder);
 app.use(paymentRouter);
+app.use(customErrorHanlder);
 const server = app.listen(port, () => {
     console.log("listening at port " + port + " mode is " + process.env.NODE_ENV);
     console.log("\n"+process.env.MONGODB_URI);
