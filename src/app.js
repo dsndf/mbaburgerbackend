@@ -29,7 +29,7 @@ app.use(cors({
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 app.use(session({
     secret: process.env.SESSION_SECERET,
@@ -41,12 +41,12 @@ app.use(session({
         httpOnly: false
     }
 }));
-applyGoogleAuth();
+
 app.use(passport.authenticate('session'));
 app.use(passport.initialize());
 app.use(passport.session());
 app.enable("trust proxy");
-
+applyGoogleAuth();
 
 app.use(userRouter);
 app.use(orderRouter);
