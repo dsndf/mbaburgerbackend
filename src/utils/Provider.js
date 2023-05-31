@@ -12,7 +12,7 @@ console.log(process.env.CALLBACK_URL)
         callbackURL: process.env.CALLBACK_URL ,
         passReqToCallback: true
 
-    }, async (request, accessToken, refreshToken, profile, cb) => {
+    }, async (accessToken, refreshToken, profile, done) => {
         const user = await userCollection.findOne({ googleId: profile.id });
         if (!user) {
             const newUser = await userCollection.create({
@@ -21,10 +21,10 @@ console.log(process.env.CALLBACK_URL)
                 photo: profile.photos[0].value,
                 email:profile.emails[0].value
             });
-            return cb(null, newUser);
+            return done(null, newUser);
         }
         else {
-            return cb(null, user);
+            return done(null, user);
         }
     }))
     passport.serializeUser((user, done) => {

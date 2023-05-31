@@ -25,10 +25,10 @@ app.use(cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
 }))
-app.use(urlencoded({ extended: true }));
+
 app.use(cookieParser());
 app.use(express.json());
-applyGoogleAuth();
+app.use(express.urlencoded({ extended: false }));
 
 app.use(session({
     secret: process.env.SESSION_SECERET,
@@ -45,6 +45,8 @@ app.use(passport.authenticate('session'));
 app.use(passport.initialize());
 app.use(passport.session());
 app.enable("trust proxy");
+applyGoogleAuth();
+
 app.use(userRouter);
 app.use(orderRouter);
 app.use(paymentRouter);
