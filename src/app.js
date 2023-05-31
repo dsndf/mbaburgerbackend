@@ -49,7 +49,6 @@ app.use(userRouter);
 app.use(orderRouter);
 app.use(paymentRouter);
 app.use(customErrorHanlder);
-
 const server = app.listen(port, () => {
     console.log("listening at port " + port + " mode is " + process.env.NODE_ENV);
     console.log("\n" + process.env.MONGODB_URI);
