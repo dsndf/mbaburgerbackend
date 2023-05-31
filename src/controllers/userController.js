@@ -4,6 +4,7 @@ import errorHandler from "../utils/ErrorHandler.js";
 
 
 export const myProfile = (req, res, next) => {
+    console.log("user is",req.user); 
     res.json({ success: true, user: req.user });
 }
 
