@@ -24,11 +24,12 @@ const port = process.env.PORT || 5000
 app.use(cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
+ 
 }))
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(urlencoded({ extended: true }));
 
 app.use(session({
     secret: process.env.SESSION_SECERET,
@@ -37,7 +38,7 @@ app.use(session({
     cookie: {
         secure: process.env.NODE_ENV === "development" ? false : true,
         sameSite: process.env.NODE_ENV === "development" ? false : "none",
-        httpOnly: process.env.NODE_ENV === "development" ? false : true
+        httpOnly: false
     }
 }));
 applyGoogleAuth();
