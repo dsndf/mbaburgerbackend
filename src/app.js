@@ -40,12 +40,12 @@ app.use(session({
         httpOnly: process.env.NODE_ENV === "development" ? false : true
     }
 }));
-
+applyGoogleAuth();
 app.use(passport.authenticate('session'));
 app.use(passport.initialize());
 app.use(passport.session());
 app.enable("trust proxy");
-applyGoogleAuth();
+
 
 app.use(userRouter);
 app.use(orderRouter);
