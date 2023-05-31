@@ -45,7 +45,7 @@ if(paymentMethod === 'Online'){
 };
 
 export const myOrders = async (req, res, next) => {
-console.log(req.user);
+console.log(req.me+"me is me");
     const id = req.user._id;
     const orders = await orderCollection.find({ user: id }).populate(
         "user", "name email"
