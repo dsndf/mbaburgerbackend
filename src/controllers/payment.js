@@ -4,7 +4,7 @@ const stripe = Stripe(`${process.env.STRIPE_SECRET_KEY}`);
 
 
 export const paymentProcess = async (req, res, next) => {
-
+console.log("seceret key ",`${process.env.STRIPE_SECRET_KEY}`);
     const myPayment = await stripe.paymentIntents.create({
 
         amount: req.body.amount,
@@ -16,7 +16,7 @@ export const paymentProcess = async (req, res, next) => {
         ,
         confirm: true
     });
-
+console.log(myPayment);
     res.json({
         success: true,
         client_secret: myPayment.client_secret
