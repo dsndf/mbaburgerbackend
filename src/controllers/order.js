@@ -122,7 +122,7 @@ export const deleteOrder = async (req, res, next) => {
 
     const order = await orderCollection.findById(req.params.id);
     if (!order) {
-        next(errorHandler("Oops Order Not Found", 404))
+       return next(errorHandler("Oops Order Not Found", 404))
     }
     else {
         await order.remove();
